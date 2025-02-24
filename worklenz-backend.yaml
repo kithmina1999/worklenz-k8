@@ -1,0 +1,149 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worklenz-backend-deployment
+  labels:
+    app: worklenz-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worklenz-backend
+  template:
+    metadata:
+      labels:
+        app: worklenz-backend
+    spec:
+      containers:
+      - name: worklenz-backend
+        image: docker.io/kithceydigital/worklenz_backend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ANGULAR_DIST_DIR
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: ANGULAR_DIST_DIR
+        - name: ANGULAR_SRC_DIR
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: ANGULAR_SRC_DIR
+        - name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: AWS_REGION
+        - name: BACKEND_PUBLIC_DIR
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: BACKEND_PUBLIC_DIR
+        - name: BACKEND_VIEWS_DIR
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: BACKEND_VIEWS_DIR
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: DB_HOST
+        - name: DB_MAX_CLIENTS
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: DB_MAX_CLIENTS
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: DB_NAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: DB_PASSWORD
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: DB_USER
+        - name: GOOGLE_CALLBACK_URL
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: GOOGLE_CALLBACK_URL
+        - name: GOOGLE_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: GOOGLE_CLIENT_ID
+        - name: GOOGLE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: GOOGLE_CLIENT_SECRET
+        - name: SESSION_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: SESSION_SECRET
+        - name: SLACK_WEBHOOK
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: SLACK_WEBHOOK
+        - name: SOCKET_IO_CORS
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: SOCKET_IO_CORS
+        - name: S3_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: S3_ACCESS_KEY_ID
+        - name: S3_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: worklenz-secret
+              key: S3_SECRET_ACCESS_KEY
+        - name: S3_URL
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: S3_URL
+        - name: BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: BUCKET
+        - name: REGION
+          valueFrom:
+            configMapKeyRef:
+              name: worklenz-config
+              key: REGION
+        - name: PORT
+          value: "3000"
+        - name: NODE_ENV
+          value: "production"
+        - name: HOSTNAME
+          value: "worklenz-backend"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: worklenz-backend-service
+spec:
+  selector:
+    app: worklenz-backend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP

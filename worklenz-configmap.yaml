@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: worklenz-config
+data:
+  ANGULAR_DIST_DIR: "/path/worklenz_frontend/dist/worklenz"
+  ANGULAR_SRC_DIR: "/path/worklenz_frontend"
+  BACKEND_PUBLIC_DIR: "/path/worklenz_backend/src/public"
+  BACKEND_VIEWS_DIR: "/path/worklenz_backend/src/views/admin"
+  DB_MAX_CLIENTS: "50"
+  GOOGLE_CALLBACK_URL: "http://localhost:3000/secure/google/verify"
+  SOCKET_IO_CORS: "http://localhost:5000"
+  S3_URL: "S3_URL_HERE"
+  BUCKET: "your-bucket-name"
+  REGION: "us-west-2"
+  AWS_REGION: "us-west-2"
+  SLACK_WEBHOOK: "your-slack-webhook-url"
