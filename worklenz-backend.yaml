@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: worklenz-backend
-        image: docker.io/kithceydigital/worklenz_backend:production
+        image: docker.io/kithceydigital/worklenz_backend:latest
         ports:
         - containerPort: 3000
         env:
