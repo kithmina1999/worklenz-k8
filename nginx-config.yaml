@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-nginx-controller
+  namespace: default
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+data:
+  nginx.conf: |
+    # Custom NGINX configuration
+    worker_processes 1;
+    events { worker_connections 1024; }
+    http {
+      server {
+        listen 80;
+        server_name worklenz.local;
+        location / {
+          proxy_pass http://worklenz-frontend-service.default.svc.cluster.local;
+        }
+      }
+    }
