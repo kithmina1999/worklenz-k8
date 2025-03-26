@@ -27,8 +27,7 @@ spec:
                 name: worklenz-frontend-service
                 port:
                   number: 5000
-    - host: "*"
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
