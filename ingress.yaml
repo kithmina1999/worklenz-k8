@@ -1,11 +1,44 @@
+### for minikube cluster using nginx
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: worklenz-ingress
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - host: localhost
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: worklenz-frontend-service
+#                 port:
+#                   number: 5000
+#     - host: worklenz.local
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: worklenz-frontend-service
+#                 port:
+#                   number: 5000
+
+### For using k3s cluster using traefik
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: worklenz-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
-  ingressClassName: nginx
   rules:
     - host: localhost
       http:
