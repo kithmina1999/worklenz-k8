@@ -41,7 +41,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.rule: "HostRegexp(`{host:.+}`)"  # Matches any host
 spec:
   rules:
-    - host: "*"
+    - host: ""
       http:
         paths:
           - path: /
