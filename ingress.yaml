@@ -38,11 +38,11 @@ metadata:
   name: worklenz-ingress
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-    traefik.ingress.kubernetes.io/router.rule: "HostRegexp(`{host:.+}`)"  # Matches any host
+    traefik.ingress.kubernetes.io/router.rule: "HostRegexp(`{host:.+}`)"
 spec:
+  ingressClassName: traefik  # Add this to explicitly use Traefik
   rules:
-    - host: ""
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
@@ -51,4 +51,5 @@ spec:
                 name: worklenz-frontend-service
                 port:
                   number: 5000
+
 
