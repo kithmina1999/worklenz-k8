@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: traefik
+  namespace: kube-system
+  labels:
+    app: traefik
+spec:
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      hostNetwork: true
+      containers:
+        - name: traefik
+          image: traefik:v2.10
+          args:
+            - "--entrypoints.web.address=:8000"
+            - "--entrypoints.websecure.address=:8443"
+            - "--providers.kubernetescrd"
+            - "--api.dashboard=true"
+            - "--accesslog=true"
+          ports:
+            - name: web
+              containerPort: 8000
+              hostPort: 8000
+            - name: websecure
+              containerPort: 8443
+              hostPort: 8443
