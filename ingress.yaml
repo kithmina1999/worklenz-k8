@@ -37,8 +37,9 @@ kind: Ingress
 metadata:
   name: worklenz-ingress
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-    traefik.ingress.kubernetes.io/router.rule: "HostRegexp(`{host:.+}`)"
+    kubernetes.io/ingress.class: traefik                   # Tell Kubernetes to use Traefik
+    # cert-manager.io/cluster-issuer: letsencrypt-prod       # If you use cert-manager (for automatic certs)
+    # traefik.ingress.kubernetes.io/router.entrypoints: websecure  # Force HTTPS
 spec:
   ingressClassName: traefik  # Add this to explicitly use Traefik
   rules:
