@@ -7,9 +7,9 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: 8000
     - port: 443
-      targetPort: 443
+      targetPort: 8443
   selector:
     app: traefik
 
